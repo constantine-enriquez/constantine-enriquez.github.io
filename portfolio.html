@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Constantine J. Enriquez - Featured web projects including Belize Bus Schedules and Kylora Care">
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Constantine J. Enriquez - Portfolio">
+    <meta property="og:title" content="Constantine J. Enriquez - Portfolio">
+    <link rel="shortcut icon" href="assets/images/favicon-32x32-32x32.png" type="image/x-icon">
+    
+    <title>Constantine J. Enriquez - Portfolio</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg sophisticated-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="/">Constantine Enriquez</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/education">Education</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/experience">Experience</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/portfolio">Portfolio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-header portfolio-hero-compact">
+        <div class="container">
+            <h1 class="page-title fade-in">Featured Projects</h1>
+            <p class="page-subtitle fade-in">Platforms built for communities and businesses across Belize</p>
+        </div>
+    </section>
+
+    <section class="portfolio-section">
+        <div class="container portfolio-grid">
+            <article class="portfolio-card fade-in portfolio-card-featured">
+                <div class="portfolio-card-top">
+                    <div class="portfolio-card-icon portfolio-visual-bus">
+                        <i class="fas fa-bus"></i>
+                    </div>
+                    <div class="portfolio-card-head">
+                        <span class="portfolio-award-pill"><i class="fas fa-trophy"></i> Belize Game Changers Award</span>
+                        <h2 class="portfolio-card-title">Belize Bus Schedules</h2>
+                        <span class="portfolio-tag">Public Transportation</span>
+                    </div>
+                    <a href="https://belizebusschedules.com/" target="_blank" rel="noopener" class="portfolio-cta">
+                        Visit <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <p class="portfolio-card-desc">
+                    Nationwide bus route and schedule platform for commuters across Belize. Earned national recognition, 
+                    including attention from Belize's Minister of Transport, and was featured in 
+                    <a href="https://www.greaterbelize.com/young-innovators-bus-app-gets-ministrys-attention/" target="_blank" rel="noopener">Greater Belize Media</a>.
+                </p>
+                <div class="portfolio-tech">
+                    <span>Cloudflare Workers</span>
+                    <span>D1</span>
+                    <span>JavaScript</span>
+                </div>
+            </article>
+
+            <article class="portfolio-card fade-in">
+                <div class="portfolio-card-top">
+                    <div class="portfolio-card-icon portfolio-visual-spa">
+                        <i class="fas fa-spa"></i>
+                    </div>
+                    <div class="portfolio-card-head">
+                        <h2 class="portfolio-card-title">Kylora Care</h2>
+                        <span class="portfolio-tag">Beauty &amp; Wellness</span>
+                    </div>
+                    <a href="https://kyloracare.com/" target="_blank" rel="noopener" class="portfolio-cta portfolio-cta-secondary">
+                        Visit <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <p class="portfolio-card-desc">
+                    Booking website for professional skincare and aesthetic treatments in Corozal. Gives clients a clear 
+                    path to discover services and book appointments with clean branding and a polished local presence.
+                </p>
+                <div class="portfolio-tech">
+                    <span>HTML/CSS</span>
+                    <span>JavaScript</span>
+                    <span>Responsive UI</span>
+                </div>
+            </article>
+
+            <div class="portfolio-cta-banner fade-in">
+                <p>Interested in a project like these? <a href="/contact">Let's talk</a>.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Constantine Enriquez - All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -80px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach((el, index) => {
+                el.style.transitionDelay = `${index * 0.1}s`;
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
