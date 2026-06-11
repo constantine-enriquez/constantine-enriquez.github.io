@@ -341,7 +341,7 @@ function initHero3D(container) {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
-    camera.position.set(0, 1.85, 6.6);
+    camera.position.set(0, 1.78, 5.5);
 
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -351,8 +351,8 @@ function initHero3D(container) {
     controls.enablePan = false;
     controls.enableDamping = true;
     controls.dampingFactor = 0.06;
-    controls.minDistance = 4;
-    controls.maxDistance = 9.5;
+    controls.minDistance = 3.4;
+    controls.maxDistance = 8.5;
     controls.minPolarAngle = Math.PI / 3.4;
     controls.maxPolarAngle = Math.PI / 1.7;
     controls.target.set(0, 1.7, 0);

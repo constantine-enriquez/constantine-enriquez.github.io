@@ -19,7 +19,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="assets/styles.css?v=8">
 </head>
 <body>
     <!-- Navigation -->
@@ -35,7 +35,7 @@
                         <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/education">Education</a>
+                        <a class="nav-link" href="/qualifications">Qualifications</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/experience">Experience</a>
@@ -53,60 +53,86 @@
 
     <!-- Hero Section -->
     <section class="hero-section">
+        <div class="hero-name-band">
+            <h1 class="hero-title fade-in">CONSTANTINE ENRIQUEZ</h1>
+        </div>
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 col-md-12 text-center text-lg-start hero-content">
-                    <h1 class="hero-title fade-in">Constantine<br>Enriquez</h1>
-                    <p class="hero-subtitle fade-in">Transforming business ideas into powerful digital experiences</p>
-                    
-                    <div class="hero-specialties fade-in">
-                        <span class="specialty-badge">Tech Support Specialist</span>
-                        <span class="specialty-badge">Integrations Expert</span>
-                        <span class="specialty-badge">Solutions Architect</span>
-                    </div>
-                    
-                    <div class="value-proposition fade-in text-center">
-                        <h3>Ready to Build Something Amazing?</h3>
-                        <p>I specialize in creating custom websites that don't only look great - they solve real business problems.<br> In a digitally evolving country like Belize, a strong online presences is an invaluable resrounce and I work hard to ensure that your company stands out.</p>
-                    </div>         
-                    <div class="credentials fade-in">
-                           <div class="credential-item">
-                           <i class="fas fa-graduation-cap"></i>
-                           <span>Associates's Degree in Computer Information Systems - SJCJC</span>
-                        </div>
-                        <div class="credential-item">
-                            <i class="fas fa-graduation-cap"></i>
-                            <span>Bachelor's Degree in IT - University of Belize</span>
-                        </div>
-                        <div class="credential-item">
-                            <i class="fab fa-google"></i>
-                            <span>Google IT Support Certified</span>
-                        </div>
-                        <div class="credential-item award-credential">
-                            <i class="fas fa-trophy"></i>
-                            <span>Belize Game Changers Award Winner — creator of <a href="https://belizebusschedules.com/" target="_blank" rel="noopener">Belize Bus Schedules</a>, recognized nationally for innovation in public transportation</span>
-                        </div>
-                    </div>
-                    
-                    <div class="fade-in d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
-                        <a href="/portfolio" class="sophisticated-btn secondary-btn">
-                            <i class="fas fa-folder-open me-2"></i>View Portfolio
-                        </a>
-                        <a href="/contact" class="sophisticated-btn secondary-btn">
-                            <i class="fas fa-rocket me-2"></i>Let's Build Together
-                        </a>
-                    </div>
+            <div class="hero-specialties fade-in">
+                <span class="specialty-badge">Tech Support Specialist</span>
+                <span class="specialty-badge">Integrations Expert</span>
+                <span class="specialty-badge">Solutions Architect</span>
             </div>
-                <div class="col-lg-6 col-md-12 text-center">
+            <p class="hero-subtitle hero-subtitle-tagline fade-in">Transforming business ideas into powerful digital experiences.</p>
+            <div class="row align-items-center hero-main-row">
+                <div class="col-lg-6 col-md-12 text-center order-1 order-lg-2">
                     <div id="hero-3d-viewer" class="hero-3d-viewer fade-in" aria-label="Interactive 3D portrait of Constantine Enriquez">
                         <canvas></canvas>
                         <p class="hero-3d-loading">Loading 3D preview...</p>
                         <p class="hero-3d-hint hidden"><i class="fas fa-hand-pointer"></i> Drag to rotate</p>
                     </div>
+                </div>
+                <div class="col-lg-6 col-md-12 text-center order-2 order-lg-1 hero-content">
+                    <div class="value-proposition fade-in">
+                        <span class="value-proposition-label">Let's work together</span>
+                        <h3>Ready to Build Something Amazing?</h3>
+                        <p>I build custom websites that don't just look great - they solve real business problems. In a digitally evolving Belize, a strong online presence is one of the smartest investments you can make.</p>
+                        <div class="hero-cta-row">
+                            <a href="/contact" class="sophisticated-btn">
+                                <i class="fas fa-rocket me-2"></i>Let's Build Together
+                            </a>
+                            <a href="/portfolio" class="sophisticated-btn secondary-btn">
+                                <i class="fas fa-folder-open me-2"></i>View Portfolio
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="credentials fade-in">
+                        <div class="credential-featured award-credential">
+                            <div class="credential-icon-wrap credential-icon-gold">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="credential-text">
+                                <strong>Belize Game Changers Award Winner</strong>
+                                <span class="credential-detail">Creator of <a href="https://belizebusschedules.com/" target="_blank" rel="noopener">Belize Bus Schedules</a></span>
+                                <span class="credential-meta">Nationally recognized for public transit innovation</span>
+                            </div>
+                        </div>
+                        <div class="credentials-grid">
+                            <div class="credential-item">
+                                <div class="credential-icon-wrap">
+                                    <i class="fas fa-school"></i>
+                                </div>
+                                <div class="credential-text">
+                                    <span class="credential-label">Academics</span>
+                                    <span class="credential-title">Associate's in Computer Information Systems</span>
+                                    <span class="credential-meta">St. John's College Junior College</span>
+                                </div>
+                            </div>
+                            <div class="credential-item">
+                                <div class="credential-icon-wrap">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                                <div class="credential-text">
+                                    <span class="credential-label">Academics</span>
+                                    <span class="credential-title">Bachelor's in Information Technology</span>
+                                    <span class="credential-meta">University of Belize</span>
+                                </div>
+                            </div>
+                            <div class="credential-item credential-item-wide">
+                                <div class="credential-icon-wrap">
+                                    <i class="fab fa-google"></i>
+                                </div>
+                                <div class="credential-text">
+                                    <span class="credential-label">Certification</span>
+                                    <span class="credential-title">Google IT Support Professional Certificate</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <!-- Skills Section -->
     <section class="skills-section">
@@ -171,17 +197,17 @@
                 </div>
 
                 <div class="skill-card fade-in">
-                    <div class="skill-icon php">
-                        <i class="fab fa-php"></i>
+                    <div class="skill-icon supabase">
+                        <i class="fas fa-database"></i>
                     </div>
-                    <h3 class="skill-title">PHP</h3>
+                    <h3 class="skill-title">Supabase</h3>
                 </div>
 
                 <div class="skill-card fade-in">
-                    <div class="skill-icon support">
-                        <i class="fas fa-headset"></i>
+                    <div class="skill-icon flutter">
+                        <i class="fas fa-mobile-screen"></i>
                     </div>
-                    <h3 class="skill-title">Customer Support</h3>
+                    <h3 class="skill-title">Flutter</h3>
                 </div>
             </div>
     </div>
@@ -205,7 +231,7 @@
         }
     }
     </script>
-    <script type="module" src="assets/hero-3d.js"></script>
+    <script type="module" src="assets/hero-3d.js?v=2"></script>
     
     <!-- Custom JavaScript -->
     <script>
