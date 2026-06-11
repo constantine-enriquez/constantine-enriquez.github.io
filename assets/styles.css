@@ -1253,6 +1253,20 @@ body::before {
     gap: 20px;
 }
 
+.portfolio-subsection-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--palette-dark-brown);
+    margin: 12px 0 4px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(196, 117, 138, 0.2);
+}
+
+.portfolio-subsection-title:first-child {
+    margin-top: 0;
+}
+
 .portfolio-card {
     padding: 22px 24px;
     border-radius: 16px;
@@ -1298,6 +1312,26 @@ body::before {
 .portfolio-visual-spa {
     background: linear-gradient(135deg, var(--palette-mauve), var(--palette-brown));
     color: var(--palette-off-white);
+}
+
+.portfolio-visual-app {
+    background: linear-gradient(135deg, var(--palette-dark-brown), var(--palette-mauve));
+    color: var(--palette-off-white);
+}
+
+.portfolio-platform-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--palette-mauve);
+    background: rgba(139, 111, 125, 0.15);
+    padding: 3px 10px;
+    border-radius: 50px;
+    margin-bottom: 4px;
 }
 
 .portfolio-card-head {

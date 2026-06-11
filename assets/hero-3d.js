@@ -12,7 +12,11 @@ const COLOR = {
     button: 0x230309,
     pants: 0x111115,
     shoe: 0x0a0a0c,
-    eye: 0x070707
+    eye: 0x070707,
+    laptop: 0xb8bcc6,
+    laptopDark: 0x3a3a42,
+    laptopKeys: 0xe2e4ea,
+    screen: 0x6e1423
 };
 
 /* Funko-style head proportions, reused by the hair builder */
@@ -248,29 +252,179 @@ function buildTorso(dotTexture) {
     return group;
 }
 
-/* Short, stubby Funko arms held at the sides */
+/* Short, stubby Funko arms holding a laptop in front */
 function buildArms() {
     const group = new THREE.Group();
     const skinMat = makeMat(COLOR.skin, 0.62);
     const sleeveMat = makeMat(COLOR.shirt, 0.72);
 
-    [-1, 1].forEach((s) => {
-        const shoulder = v(s * 0.42, 1.46, 0.02);
-        const hand = v(s * 0.5, 0.82, 0.05);
+    const poses = [
+        {
+            shoulder: v(-0.42, 1.46, 0.04),
+            elbow: v(-0.46, 1.16, 0.34),
+            hand: v(-0.34, 0.96, 0.66)
+        },
+        {
+            shoulder: v(0.42, 1.46, 0.04),
+            elbow: v(0.46, 1.16, 0.34),
+            hand: v(0.34, 0.96, 0.66)
+        }
+    ];
 
-        // Short sleeve over the upper arm
-        const sleeveEnd = shoulder.clone().lerp(hand, 0.5);
-        group.add(limb(shoulder, sleeveEnd, 0.16, sleeveMat));
+    poses.forEach(({ shoulder, elbow, hand }) => {
+        const upperEnd = shoulder.clone().lerp(elbow, 0.55);
+        group.add(limb(shoulder, upperEnd, 0.15, sleeveMat));
+        group.add(limb(shoulder, elbow, 0.1, skinMat));
+        group.add(limb(elbow, hand, 0.095, skinMat));
 
-        // Skin lower arm
-        group.add(limb(shoulder, hand, 0.105, skinMat));
-
-        // Mitten hand
-        const mitten = new THREE.Mesh(new THREE.SphereGeometry(0.13, 18, 18), skinMat);
-        mitten.scale.set(1, 1.05, 0.9);
+        const mitten = new THREE.Mesh(new THREE.SphereGeometry(0.11, 16, 16), skinMat);
+        mitten.scale.set(1.05, 0.95, 0.85);
         mitten.position.copy(hand);
         group.add(mitten);
     });
+
+    return group;
+}
+
+/* Bright code-editor texture for the laptop screen */
+function makeScreenTexture() {
+    const w = 320;
+    const h = 200;
+    const canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = '#120810';
+    ctx.fillRect(0, 0, w, h);
+
+    ctx.fillStyle = '#6e1423';
+    ctx.fillRect(0, 0, w, 24);
+    ctx.fillStyle = '#c4758a';
+    ctx.fillRect(10, 8, 56, 8);
+
+    const lines = [
+        { color: '#e8b4c4', width: 180, y: 40 },
+        { color: '#c4758a', width: 130, y: 62 },
+        { color: '#e8b4c4', width: 200, y: 84 },
+        { color: '#8b6f7d', width: 110, y: 106 },
+        { color: '#e8b4c4', width: 160, y: 128 },
+        { color: '#c4758a', width: 90, y: 150 },
+        { color: '#e8b4c4', width: 140, y: 172 }
+    ];
+    lines.forEach(({ color, width, y }) => {
+        ctx.fillStyle = color;
+        ctx.fillRect(14, y, width, 9);
+    });
+
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    return texture;
+}
+
+/* Chunky Funko-style open laptop — deck and screen share one hinge so they stay joined.
+   Held out away from the body at roughly arm's length. */
+function buildComputer() {
+    const group = new THREE.Group();
+
+    const bodyMat = makeMat(COLOR.laptop, 0.38, 0.35);
+    const darkMat = makeMat(COLOR.laptopDark, 0.55);
+    const keyMat = makeMat(COLOR.laptopKeys, 0.45);
+    const screenTex = makeScreenTexture();
+    const screenMat = new THREE.MeshStandardMaterial({
+        map: screenTex,
+        emissive: 0x6e1423,
+        emissiveMap: screenTex,
+        emissiveIntensity: 0.65,
+        roughness: 0.2,
+        metalness: 0.05
+    });
+
+    const W = 0.64;
+    const deckDepth = 0.44;
+    const lidHeight = 0.46;
+
+    // Hinge axis: the shared joint where deck and screen meet.
+    // Pushed forward (z) and away from the chin so it reads as held out.
+    const hinge = new THREE.Group();
+    hinge.position.set(0, 0.94, 0.62);
+    group.add(hinge);
+
+    // --- Keyboard deck: extends forward from the hinge, gently tilted up ---
+    const deck = new THREE.Group();
+    deck.rotation.x = -0.12;
+    hinge.add(deck);
+
+    const base = new THREE.Mesh(
+        new RoundedBoxGeometry(W, 0.085, deckDepth, 3, 0.04),
+        bodyMat
+    );
+    base.position.set(0, 0, deckDepth / 2);
+    deck.add(base);
+
+    const keyboard = new THREE.Mesh(
+        new RoundedBoxGeometry(W - 0.1, 0.014, deckDepth - 0.12, 2, 0.01),
+        darkMat
+    );
+    keyboard.position.set(0, 0.046, deckDepth / 2 - 0.02);
+    deck.add(keyboard);
+
+    for (let row = 0; row < 3; row++) {
+        for (let col = 0; col < 9; col++) {
+            const key = new THREE.Mesh(
+                new THREE.BoxGeometry(0.046, 0.012, 0.028),
+                keyMat
+            );
+            key.position.set(-0.19 + col * 0.047, 0.055, 0.16 + row * 0.034);
+            deck.add(key);
+        }
+    }
+
+    const trackpad = new THREE.Mesh(
+        new THREE.BoxGeometry(0.17, 0.01, 0.1),
+        keyMat
+    );
+    trackpad.position.set(0, 0.054, deckDepth - 0.06);
+    deck.add(trackpad);
+
+    // --- Screen: rises from the same hinge, leaned back a touch ---
+    const screen = new THREE.Group();
+    screen.rotation.x = -0.32;
+    hinge.add(screen);
+
+    const lid = new THREE.Mesh(
+        new RoundedBoxGeometry(W, lidHeight, 0.035, 3, 0.025),
+        bodyMat
+    );
+    lid.position.set(0, lidHeight / 2, 0);
+    screen.add(lid);
+
+    const display = new THREE.Mesh(
+        new THREE.PlaneGeometry(W - 0.08, lidHeight - 0.08),
+        screenMat
+    );
+    display.position.set(0, lidHeight / 2, 0.022);
+    screen.add(display);
+
+    const bezelTop = new THREE.Mesh(new THREE.BoxGeometry(W - 0.04, 0.02, 0.01), bodyMat);
+    bezelTop.position.set(0, lidHeight - 0.02, 0.02);
+    screen.add(bezelTop);
+    const bezelBottom = new THREE.Mesh(new THREE.BoxGeometry(W - 0.04, 0.02, 0.01), bodyMat);
+    bezelBottom.position.set(0, 0.02, 0.02);
+    screen.add(bezelBottom);
+    [-1, 1].forEach((s) => {
+        const side = new THREE.Mesh(new THREE.BoxGeometry(0.02, lidHeight - 0.04, 0.01), bodyMat);
+        side.position.set(s * (W / 2 - 0.03), lidHeight / 2, 0.02);
+        screen.add(side);
+    });
+
+    // Hinge barrel sitting right on the shared axis
+    const barrel = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.026, 0.026, W + 0.02, 12),
+        bodyMat
+    );
+    barrel.rotation.z = Math.PI / 2;
+    hinge.add(barrel);
 
     return group;
 }
@@ -318,6 +472,7 @@ function buildCharacter() {
 
     character.add(buildLowerBody());
     character.add(buildTorso(dotTexture));
+    character.add(buildComputer());
     character.add(buildArms());
     character.add(buildHead());
     character.add(buildBeard());
@@ -355,7 +510,7 @@ function initHero3D(container) {
     controls.maxDistance = 8.5;
     controls.minPolarAngle = Math.PI / 3.4;
     controls.maxPolarAngle = Math.PI / 1.7;
-    controls.target.set(0, 1.7, 0);
+    controls.target.set(0, 1.35, 0.35);
     controls.autoRotate = true;
     controls.autoRotateSpeed = 1.1;
     controls.update();
