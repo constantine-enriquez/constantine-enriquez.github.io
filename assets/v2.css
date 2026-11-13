@@ -1898,3 +1898,41 @@ textarea.input { min-height: 150px; resize: vertical; line-height: 1.5; }
 .price-note strong { color: var(--ink); }
 .page-head .price-note + .hero-cta { margin-top: 22px; }
 .closer-sub { margin: 12px 0 0; font-size: 1.1rem; color: rgba(255, 255, 255, .82); }
+
+/* ==========================================================================
+   Red accent (borrowed from the civic design)
+   Used sparingly: top strip, current page, heading rules, closing band.
+   ========================================================================== */
+:root {
+    --red: #ce1126;
+    --red-deep: #a50d1f;
+}
+
+/* Thin red strip across the very top */
+.nav { border-top: 4px solid var(--red); }
+
+/* Current page in the menu */
+.nav-links a[aria-current="page"]:not(.nav-cta)::after { background: var(--red); }
+
+/* Short red rule under section headings */
+.section-title::after,
+.page-title::after {
+    content: '';
+    display: block;
+    width: 56px;
+    height: 4px;
+    margin-top: 16px;
+    background: var(--red);
+}
+.page-title::after { margin-top: 20px; }
+.closer h2::after { display: none; }
+
+/* Thin red strip along the bottom of the footer: blue page, red edges, like the flag */
+.footer { border-bottom: 4px solid var(--red); }
+
+/* "Now building" tag */
+.next-up .pill { background: var(--red); color: var(--white); }
+
+@media (max-width: 899px) {
+    .nav-links a[aria-current="page"] { color: var(--red); }
+}
