@@ -50,6 +50,96 @@
 
     onScrollNav();
 
+    /* ---------------------------------------------------------------
+       Scroll effects. Everything here is skipped for reduced motion.
+       Uses the `translate` property so it never fights the CSS
+       entrance animations, which use `transform`.
+       --------------------------------------------------------------- */
+    if (!reduceMotion) {
+        const root = document.documentElement;
+        const hero = document.querySelector('.hero');
+        const heroName = document.querySelector('.hero-name');
+        const heroPhoto = document.querySelector('.hero-photo');
+        const heroPic = heroPhoto && heroPhoto.querySelector('picture');
+        const devices = [...document.querySelectorAll('.devices')];
+        const timelines = [...document.querySelectorAll('.timeline')];
+        const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+        let queued = false;
+
+        const update = () => {
+            queued = false;
+            const vh = window.innerHeight;
+
+            // 1. Hero depth: name rises, photo lifts a little, map sinks
+            if (hero) {
+                const h = hero.offsetHeight;
+                const p = clamp(window.scrollY / h, 0, 1);
+                if (p < 1 || hero.dataset.p !== '1') {
+                    if (heroName) heroName.style.translate = `0 ${(-p * 70).toFixed(1)}px`;
+                    if (heroPic) heroPic.style.translate = `0 ${(-p * 30).toFixed(1)}px`;
+                    if (heroPhoto) heroPhoto.style.setProperty('--map-y', `${(p * 90).toFixed(1)}px`);
+                    hero.dataset.p = p >= 1 ? '1' : '0';
+                }
+            }
+
+            // 2. Mockups: the phone glides up past the laptop
+            devices.forEach((d) => {
+                const r = d.getBoundingClientRect();
+                if (r.bottom < -100 || r.top > vh + 100) return;
+                const t = clamp(((r.top + r.height / 2) - vh / 2) / vh, -1, 1); // -1 above centre, 1 below
+                const phone = d.querySelector('.phone');
+                if (phone) phone.style.translate = `0 ${(t * 36).toFixed(1)}px`;
+            });
+
+            // 3. Timeline rail fills as you read down it
+            timelines.forEach((tl) => {
+                const r = tl.getBoundingClientRect();
+                const f = clamp((vh * 0.6 - r.top) / r.height, 0, 1);
+                tl.style.setProperty('--tl-fill', f.toFixed(3));
+            });
+        };
+        const queue = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
+        window.addEventListener('scroll', queue, { passive: true });
+        window.addEventListener('resize', queue);
+        root.classList.add('fx');
+        update();
+
+        if ('IntersectionObserver' in window) {
+            // 4. Red heading bars draw in from the left
+            const bars = new IntersectionObserver((entries) => {
+                entries.forEach((e) => {
+                    if (!e.isIntersecting) return;
+                    e.target.classList.add('is-drawn');
+                    bars.unobserve(e.target);
+                });
+            }, { rootMargin: '0px 0px -15% 0px' });
+            document.querySelectorAll('.section-title, .page-title').forEach((el) => bars.observe(el));
+
+            // 5. Numbers count up once ("17k", "500"); years and single digits stay put
+            const counters = new IntersectionObserver((entries) => {
+                entries.forEach((e) => {
+                    if (!e.isIntersecting) return;
+                    counters.unobserve(e.target);
+                    const node = e.target.firstChild;
+                    const m = node && node.nodeType === 3 && node.textContent.match(/^(\d+)(\D*)$/);
+                    if (!m) return;
+                    const end = parseInt(m[1], 10), unit = m[2];
+                    if (end < 10 || (end >= 1900 && end <= 2100 && !unit)) return;
+                    const start = performance.now(), dur = 1300;
+                    const step = (now) => {
+                        const k = clamp((now - start) / dur, 0, 1);
+                        const eased = 1 - Math.pow(1 - k, 3);
+                        node.textContent = Math.round(end * eased) + unit;
+                        if (k < 1) requestAnimationFrame(step);
+                    };
+                    node.textContent = '0' + unit;
+                    requestAnimationFrame(step);
+                });
+            }, { threshold: 0.6 });
+            document.querySelectorAll('.stat-num').forEach((el) => counters.observe(el));
+        }
+    }
+
     /* ---------- Promo videos: muted autoplay while on screen ----------
        Plays only while at least half visible (saves data + battery on phones),
        never autoplays for people who prefer reduced motion. */
