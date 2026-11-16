@@ -87,7 +87,7 @@
                 const r = d.getBoundingClientRect();
                 if (r.bottom < -100 || r.top > vh + 100) return;
                 const t = clamp(((r.top + r.height / 2) - vh / 2) / vh, -1, 1); // -1 above centre, 1 below
-                const phone = d.querySelector('.phone');
+                const phone = d.querySelector('.phone, .browser-pop');
                 if (phone) phone.style.translate = `0 ${(t * 36).toFixed(1)}px`;
             });
 

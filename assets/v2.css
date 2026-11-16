@@ -1079,6 +1079,20 @@ textarea.input { min-height: 150px; resize: vertical; line-height: 1.5; }
     border-radius: clamp(12px, 2.3vw, 26px);
 }
 
+/* Web app variant: a second browser window overlaps the corner instead of a phone */
+.devices.devices-web { padding: 0 12% 16% 0; }
+.devices-web .browser img { aspect-ratio: auto; }
+.browser-pop {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 48%;
+    border-radius: 9px;
+    box-shadow: 0 2px 4px rgba(9, 22, 45, .2), 0 28px 48px -12px rgba(9, 22, 45, .55);
+}
+.browser-pop .browser-bar { height: 20px; padding: 0 8px; gap: 4px; }
+.browser-pop .browser-bar > span { width: 6px; height: 6px; }
+
 /* --------------------------------------------------------------------------
    Selected work (home)
    -------------------------------------------------------------------------- */
