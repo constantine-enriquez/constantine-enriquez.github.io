@@ -1981,7 +1981,6 @@ textarea.input { min-height: 150px; resize: vertical; line-height: 1.5; }
    -------------------------------------------------------------------------- */
 .hero-photo::before { translate: 0 var(--map-y, 0px); }
 .fx .hero-name,
-.fx .hero-photo picture,
 .fx .phone { will-change: translate; }
 
 /* Red heading bars draw in */

@@ -60,7 +60,6 @@
         const hero = document.querySelector('.hero');
         const heroName = document.querySelector('.hero-name');
         const heroPhoto = document.querySelector('.hero-photo');
-        const heroPic = heroPhoto && heroPhoto.querySelector('picture');
         const devices = [...document.querySelectorAll('.devices')];
         const timelines = [...document.querySelectorAll('.timeline')];
         const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
@@ -70,13 +69,12 @@
             queued = false;
             const vh = window.innerHeight;
 
-            // 1. Hero depth: name rises, photo lifts a little, map sinks
+            // 1. Hero depth: name rises, map sinks (the photo stays put: lifting it would open a gap under it)
             if (hero) {
                 const h = hero.offsetHeight;
                 const p = clamp(window.scrollY / h, 0, 1);
                 if (p < 1 || hero.dataset.p !== '1') {
                     if (heroName) heroName.style.translate = `0 ${(-p * 70).toFixed(1)}px`;
-                    if (heroPic) heroPic.style.translate = `0 ${(-p * 30).toFixed(1)}px`;
                     if (heroPhoto) heroPhoto.style.setProperty('--map-y', `${(p * 90).toFixed(1)}px`);
                     hero.dataset.p = p >= 1 ? '1' : '0';
                 }
